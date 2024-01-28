@@ -1,0 +1,152 @@
+{
+  "name": "git-skip",
+  "displayName": "Git Skip",
+  "description": "",
+  "icon": "images/logo.png",
+  "version": "0.1.0",
+  "publisher": "alcyon-dev",
+  "author": {
+    "name": "Alcyon Technologies",
+    "email": "dev@alcyon.dev"
+  },
+  "repository": "https://github.com/Alcyon-Dev/vscode-ext-git-skip",
+  "license": "ISC",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitSkip.flagSkipWorktree",
+        "title": "Skip Worktree"
+      },
+      {
+        "command": "gitSkip.unFlagSkipWorktree",
+        "title": "Undo Skip Worktree",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "gitSkip.refreshSkipWorktree",
+        "title": "Refresh Skip Worktree",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "gitSkip.flagAssumeUnchanged",
+        "title": "Assume Unchanged"
+      },
+      {
+        "command": "gitSkip.unFlagAssumeUnchanged",
+        "title": "Undo Assume Unchanged",
+        "icon": "$(discard)"
+      },
+      {
+        "command": "gitSkip.refreshAssumeUnchanged",
+        "title": "Refresh Assume Unchanged",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "gitSkip.flagSkipWorktree",
+          "when": "false"
+        },
+        {
+          "command": "gitSkip.unFlagSkipWorktree",
+          "when": "false"
+        },
+        {
+          "command": "gitSkip.flagAssumeUnchanged",
+          "when": "false"
+        },
+        {
+          "command": "gitSkip.unFlagAssumeUnchanged",
+          "when": "false"
+        }
+      ],
+      "scm/resourceState/context": [
+        {
+          "command": "gitSkip.flagSkipWorktree",
+          "when": "scmProvider == git && scmResourceGroup == workingTree",
+          "group": "9_gitSkip@1"
+        },
+        {
+          "command": "gitSkip.flagAssumeUnchanged",
+          "when": "scmProvider == git && scmResourceGroup == workingTree",
+          "group": "9_gitSkip@2"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "gitSkip.refreshSkipWorktree",
+          "when": "view == gitSkipSkipWorktree",
+          "group": "navigation"
+        },
+        {
+          "command": "gitSkip.refreshAssumeUnchanged",
+          "when": "view == gitSkipAssumeUnchanged",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "gitSkip.unFlagSkipWorktree",
+          "when": "view == gitSkipSkipWorktree",
+          "group": "inline"
+        },
+        {
+          "command": "gitSkip.unFlagAssumeUnchanged",
+          "when": "view == gitSkipAssumeUnchanged",
+          "group": "inline"
+        }
+      ]
+    },
+    "views": {
+      "scm": [
+        {
+          "id": "gitSkipSkipWorktree",
+          "name": "Skip Worktree",
+          "when": "true",
+          "contextualTitle": "Skip Worktree"
+        },
+        {
+          "id": "gitSkipAssumeUnchanged",
+          "name": "Assume Unchanged",
+          "when": "true",
+          "contextualTitle": "Assume Unchanged"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/npmcli__promise-spawn": "^6.0.3",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vscode/test-cli": "^0.0.4",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@npmcli/promise-spawn": "^7.0.1"
+  }
+}
