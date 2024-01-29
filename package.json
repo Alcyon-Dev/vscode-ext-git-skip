@@ -1,9 +1,9 @@
 {
   "name": "git-skip",
   "displayName": "Git Skip",
-  "description": "",
+  "description": "Easily ignore changes to files using git's skip-worktree and assume-unchanged flags.",
   "icon": "images/logo.png",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "publisher": "alcyon-dev",
   "author": {
     "name": "Alcyon Technologies",
