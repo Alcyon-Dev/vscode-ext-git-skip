@@ -3,7 +3,7 @@
   "displayName": "Git Skip",
   "description": "Easily ignore changes to files using git's skip-worktree and assume-unchanged flags.",
   "icon": "images/logo.png",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "publisher": "alcyon-dev",
   "author": {
     "name": "Alcyon Technologies",
@@ -34,8 +34,8 @@
         "icon": "$(discard)"
       },
       {
-        "command": "gitSkip.refreshSkipWorktree",
-        "title": "Refresh Skip Worktree",
+        "command": "gitSkip.refresh",
+        "title": "Refresh Git Skip",
         "icon": "$(refresh)"
       },
       {
@@ -46,11 +46,6 @@
         "command": "gitSkip.unFlagAssumeUnchanged",
         "title": "Undo Assume Unchanged",
         "icon": "$(discard)"
-      },
-      {
-        "command": "gitSkip.refreshAssumeUnchanged",
-        "title": "Refresh Assume Unchanged",
-        "icon": "$(refresh)"
       }
     ],
     "menus": {
@@ -86,25 +81,20 @@
       ],
       "view/title": [
         {
-          "command": "gitSkip.refreshSkipWorktree",
-          "when": "view == gitSkipSkipWorktree",
-          "group": "navigation"
-        },
-        {
-          "command": "gitSkip.refreshAssumeUnchanged",
-          "when": "view == gitSkipAssumeUnchanged",
+          "command": "gitSkip.refresh",
+          "when": "view == gitSkip",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
           "command": "gitSkip.unFlagSkipWorktree",
-          "when": "view == gitSkipSkipWorktree",
+          "when": "view == gitSkip && viewItem == GitSkipSkipWorktreeItem",
           "group": "inline"
         },
         {
           "command": "gitSkip.unFlagAssumeUnchanged",
-          "when": "view == gitSkipAssumeUnchanged",
+          "when": "view == gitSkip && viewItem == GitSkipAssumeUnchangedItem",
           "group": "inline"
         }
       ]
@@ -112,16 +102,10 @@
     "views": {
       "scm": [
         {
-          "id": "gitSkipSkipWorktree",
-          "name": "Skip Worktree",
+          "id": "gitSkip",
+          "name": "Git Skip",
           "when": "true",
-          "contextualTitle": "Skip Worktree"
-        },
-        {
-          "id": "gitSkipAssumeUnchanged",
-          "name": "Assume Unchanged",
-          "when": "true",
-          "contextualTitle": "Assume Unchanged"
+          "contextualTitle": "Git Skip"
         }
       ]
     }
