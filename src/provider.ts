@@ -159,7 +159,7 @@ export class GitSkipProviderAssumeUnchanged extends GitSkipProviderBase {
 
 export class GitSkipItem extends vscode.TreeItem {
 
-    private fullResourceUri: vscode.Uri;
+    private fileUri: vscode.Uri;
 
     constructor(
         public readonly repoPath: string,
