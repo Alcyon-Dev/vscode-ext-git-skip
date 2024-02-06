@@ -1,43 +1,41 @@
 import * as cp from "child_process";
 import * as vscode from 'vscode';
 import { SourceControlResourceState } from 'vscode';
-import { GitSkipItem, GitSkipSkipWorktreeProvider, GitSkipAssumeUnchangedProvider } from './provider';
+import { GitSkipItem, GitSkipProviderTree, GitSkipProviderSkipWorktree, GitSkipProviderAssumeUnchanged } from './provider';
 
 export function activate(context: vscode.ExtensionContext) {
+    // Tree
+    const gitSkipProviderTree = new GitSkipProviderTree();
+    vscode.window.registerTreeDataProvider('gitSkip', gitSkipProviderTree);
+
+    context.subscriptions.push(vscode.commands.registerCommand('gitSkip.refresh', async (): Promise<void> => {
+        gitSkipProviderTree.refresh();
+    }));
+
     // Skip Worktree
-    const gitSkipSkipWorktreeProvider = new GitSkipSkipWorktreeProvider();
-    vscode.window.registerTreeDataProvider('gitSkipSkipWorktree', gitSkipSkipWorktreeProvider);
+    const gitSkipProviderSkipWorktree = new GitSkipProviderSkipWorktree();
 
     context.subscriptions.push(vscode.commands.registerCommand('gitSkip.flagSkipWorktree', async (...resourceStates: SourceControlResourceState[]): Promise<void> => {
         resourceStates.forEach(async (resourceState: SourceControlResourceState) => {
-            await gitSkipSkipWorktreeProvider.flag(resourceState);
+            await gitSkipProviderSkipWorktree.flag(resourceState);
         });
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand('gitSkip.unFlagSkipWorktree', async (file: GitSkipItem): Promise<void> => {
-        await gitSkipSkipWorktreeProvider.unFlag(file);
-    }));
-
-    context.subscriptions.push(vscode.commands.registerCommand('gitSkip.refreshSkipWorktree', async (): Promise<void> => {
-        gitSkipSkipWorktreeProvider.refresh();
+        await gitSkipProviderSkipWorktree.unFlag(file);
     }));
 
     // Assume Unchanged
-    const gitSkipAssumeUnchangedProvider = new GitSkipAssumeUnchangedProvider();
-    vscode.window.registerTreeDataProvider('gitSkipAssumeUnchanged', gitSkipAssumeUnchangedProvider);
+    const gitSkipProviderAssumeUnchanged = new GitSkipProviderAssumeUnchanged();
 
     context.subscriptions.push(vscode.commands.registerCommand('gitSkip.flagAssumeUnchanged', async (...resourceStates: SourceControlResourceState[]): Promise<void> => {
         resourceStates.forEach(async (resourceState: SourceControlResourceState) => {
-            await gitSkipAssumeUnchangedProvider.flag(resourceState);
+            await gitSkipProviderAssumeUnchanged.flag(resourceState);
         });
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand('gitSkip.unFlagAssumeUnchanged', async (file: GitSkipItem): Promise<void> => {
-        await gitSkipAssumeUnchangedProvider.unFlag(file);
-    }));
-
-    context.subscriptions.push(vscode.commands.registerCommand('gitSkip.refreshAssumeUnchanged', async (): Promise<void> => {
-        gitSkipAssumeUnchangedProvider.refresh();
+        await gitSkipProviderAssumeUnchanged.unFlag(file);
     }));
 }
 

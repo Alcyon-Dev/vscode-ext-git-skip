@@ -14,7 +14,7 @@ See, Mitch ? There's really an extension for _everything_ !
 
 ## In Action
 
-![Setting the skip-worktree flag on a file](images/flag.png)
+![Setting the skip-worktree flag on a file](images/before.png) &nbsp; ![Viewing skipped files, and removing the flag](images/after.png)
 
 ## Requirements
 
@@ -29,10 +29,11 @@ This is an alpha release, expect the unexpected ! Please open issues in this Git
 
 ## TODO
 
-- Add config options to hide one of the two flags
+- Decorations in "Git Skip" treeview to indicate if the skipped file is `skip-worktree` (`SW`) or `assume-unchanged` (`AU`)
 
 ## Release Notes
 
-### 0.1.0
+## 0.2.0
 
-Alpha release of the `Git Skip` extension.
+- Merged what was previously two SCM views ()"Skip Worktree" and "Assume Unchanged") into a single "Git Skip" view to take up less real estate.
+- Clicking on a file in the "Git Skip" view now opens the file for editing.
