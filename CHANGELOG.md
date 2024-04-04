@@ -8,7 +8,7 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## 0.3.0
 
-- Added "Assum unchanged" in explorer context menu.
+- Added "Assume unchanged" in explorer context menu.
 - Better error logging on command failures.
 
 ## 0.2.1
