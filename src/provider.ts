@@ -2,19 +2,20 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import promiseSpawn from '@npmcli/promise-spawn';
 import { API as GitApi, GitExtension, Status } from './types/git';
-import { SourceControlResourceState } from 'vscode';
 
 class GitSkipBase {
 
     protected gitApi(): GitApi {
         const gitExtension = vscode.extensions.getExtension<GitExtension>('vscode.git')?.exports;
         if (!gitExtension) {
-            throw new Error('Git extension not found');
+            vscode.window.showErrorMessage('Git extension not found !');
+            throw new Error('Git extension not found !');
         }
 
         const gitApi = gitExtension.getAPI(1);
         if (!gitApi) {
-            throw new Error('Git API not found');
+            vscode.window.showErrorMessage('Git API not found !');
+            throw new Error('Git API not found !');
         }
 
         return gitApi;
@@ -25,16 +26,23 @@ class GitSkipBase {
 
         const gitPath = gitApi.git.path;
         if (!gitPath) {
-            throw new Error('Git path not found');
+            vscode.window.showErrorMessage('Git path not found !');
+            throw new Error('Git path not found !');
         }
 
         const gitRepos = gitApi.repositories;
         if (!gitRepos) {
-            throw new Error('Git repositories not found');
+            vscode.window.showErrorMessage('Git repositories not found !');
+            throw new Error('Git repositories not found !');
         }
 
-        const res = await promiseSpawn(gitPath, args, { cwd: repoPath });
-        return res.stdout;
+        try {
+            const res = await promiseSpawn(gitPath, args, { cwd: repoPath });
+            return res.stdout;
+        } catch (err: any) {
+            vscode.window.showErrorMessage('Error calling git command "' + gitPath + ' ' + args.join(' ') + '" : ' + err.message + ' - ' + err.stderr);
+            throw err;
+        }
     }
 }
 
@@ -73,7 +81,8 @@ export class GitSkipProviderTree extends GitSkipBase implements vscode.TreeDataP
 
         const gitRepos = gitApi.repositories;
         if (!gitRepos) {
-            throw new Error('Git repositories not found');
+            vscode.window.showErrorMessage('Git repositories not found !');
+            throw new Error('Git repositories not found !');
         }
 
         const allFiles: GitSkipItem[] = [];
@@ -106,28 +115,31 @@ abstract class GitSkipProviderBase extends GitSkipBase {
     protected abstract gitFlag: string;
     protected abstract gitUnFlag: string;
 
-    async flag(file: SourceControlResourceState): Promise<void> {
+    async flag(file: vscode.Uri): Promise<void> {
         const gitApi = this.gitApi();
 
         const gitRepos = gitApi.repositories;
         if (!gitRepos) {
-            throw new Error('Git repositories not found');
+            vscode.window.showErrorMessage('Git repositories not found !');
+            throw new Error('Git repositories not found !');
         }
 
-        if ((file as any).type === Status.UNTRACKED) {
+        /* NEEDS TO SOURCE INFO FROM ELSEWHERE
+        const fileAny = file as any;
+
+        if (fileAny.type && fileAny.type === Status.UNTRACKED) {
             vscode.window.showErrorMessage('Cannot assume unchanged an untracked file.');
             return;
         }
-
-        const fileName = file.resourceUri.fsPath;
+        */
 
         gitRepos.forEach(async (repo) => {
             const repoPath = repo.rootUri.fsPath;
 
-            if (fileName.startsWith(repoPath)) {
-                await this.gitExec(repoPath, ['update-index', this.gitFlag, path.relative(repoPath, fileName)]);
+            if (file.fsPath.startsWith(repoPath)) {
+                await this.gitExec(repoPath, ['update-index', this.gitFlag, path.relative(repoPath, file.fsPath)]);
 
-                vscode.commands.executeCommand('gitSkip.refresh');
+                vscode.commands.executeCommand('gitSkip.scmRefresh');
                 vscode.commands.executeCommand('git.refresh');
             }
         });
@@ -136,7 +148,7 @@ abstract class GitSkipProviderBase extends GitSkipBase {
     async unFlag(file: GitSkipItem): Promise<void> {
         await this.gitExec(file.repoPath, ['update-index', this.gitUnFlag, file.filePath]);
 
-        vscode.commands.executeCommand('gitSkip.refresh');
+        vscode.commands.executeCommand('gitSkip.scmRefresh');
         vscode.commands.executeCommand('git.refresh');
     }
 }
