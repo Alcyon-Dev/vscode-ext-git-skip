@@ -40,6 +40,7 @@ This is an alpha release, expect the unexpected ! Please open issues in this Git
 
 ## Release Notes
 
-## 0.2.1
+## 0.3.0
 
-- Cleaned up readme and added badges.
+- Added "Assum unchanged" in explorer context menu.
+- Better error logging on command failures.
