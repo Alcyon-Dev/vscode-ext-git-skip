@@ -3,7 +3,7 @@
   "displayName": "Git Skip",
   "description": "Easily ignore changes to files using git's skip-worktree and assume-unchanged flags.",
   "icon": "images/logo.png",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "alcyon-dev",
   "author": {
     "name": "Alcyon Technologies",
@@ -25,75 +25,94 @@
   "contributes": {
     "commands": [
       {
-        "command": "gitSkip.flagSkipWorktree",
+        "command": "gitSkip.scmFlagSkipWorktree",
         "title": "Skip Worktree"
       },
       {
-        "command": "gitSkip.unFlagSkipWorktree",
+        "command": "gitSkip.scmUnFlagSkipWorktree",
         "title": "Undo Skip Worktree",
         "icon": "$(discard)"
       },
       {
-        "command": "gitSkip.refresh",
-        "title": "Refresh Git Skip",
-        "icon": "$(refresh)"
+        "command": "gitSkip.explorerFlagAssumeUnchanged",
+        "title": "Git: Assume Unchanged"
       },
       {
-        "command": "gitSkip.flagAssumeUnchanged",
+        "command": "gitSkip.scmFlagAssumeUnchanged",
         "title": "Assume Unchanged"
       },
       {
-        "command": "gitSkip.unFlagAssumeUnchanged",
+        "command": "gitSkip.scmUnFlagAssumeUnchanged",
         "title": "Undo Assume Unchanged",
         "icon": "$(discard)"
+      },
+      {
+        "command": "gitSkip.scmRefresh",
+        "title": "Refresh Git Skip",
+        "icon": "$(refresh)"
       }
     ],
     "menus": {
       "commandPalette": [
         {
-          "command": "gitSkip.flagSkipWorktree",
+          "command": "gitSkip.scmFlagSkipWorktree",
           "when": "false"
         },
         {
-          "command": "gitSkip.unFlagSkipWorktree",
+          "command": "gitSkip.scmUnFlagSkipWorktree",
           "when": "false"
         },
         {
-          "command": "gitSkip.flagAssumeUnchanged",
+          "command": "gitSkip.explorerFlagAssumeUnchanged",
           "when": "false"
         },
         {
-          "command": "gitSkip.unFlagAssumeUnchanged",
+          "command": "gitSkip.scmFlagAssumeUnchanged",
           "when": "false"
+        },
+        {
+          "command": "gitSkip.scmUnFlagAssumeUnchanged",
+          "when": "false"
+        },
+        {
+          "command": "gitSkip.scmRefresh",
+          "when": "false"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "gitSkip.explorerFlagAssumeUnchanged",
+          "when": "config.git.enabled && git.state == initialized && !explorerResourceIsFolder",
+          "group": "9_gitSkip@1"
         }
       ],
       "scm/resourceState/context": [
         {
-          "command": "gitSkip.flagSkipWorktree",
+          "command": "gitSkip.scmFlagSkipWorktree",
           "when": "scmProvider == git && scmResourceGroup == workingTree",
           "group": "9_gitSkip@1"
         },
         {
-          "command": "gitSkip.flagAssumeUnchanged",
+          "command": "gitSkip.scmFlagAssumeUnchanged",
           "when": "scmProvider == git && scmResourceGroup == workingTree",
           "group": "9_gitSkip@2"
         }
       ],
       "view/title": [
         {
-          "command": "gitSkip.refresh",
+          "command": "gitSkip.scmRefresh",
           "when": "view == gitSkip",
           "group": "navigation"
         }
       ],
       "view/item/context": [
         {
-          "command": "gitSkip.unFlagSkipWorktree",
+          "command": "gitSkip.scmUnFlagSkipWorktree",
           "when": "view == gitSkip && viewItem == GitSkipSkipWorktreeItem",
           "group": "inline"
         },
         {
-          "command": "gitSkip.unFlagAssumeUnchanged",
+          "command": "gitSkip.scmUnFlagAssumeUnchanged",
           "when": "view == gitSkip && viewItem == GitSkipAssumeUnchangedItem",
           "group": "inline"
         }
