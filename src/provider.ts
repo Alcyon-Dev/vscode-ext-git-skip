@@ -64,8 +64,16 @@ class GitSkipBase {
             throw new Error('Git repositories not found !');
         }
 
+        const safeArgs = args.map((arg) => {
+            if (arg.includes(' ')) {
+                return `"${arg}"`;
+            } else {
+                return arg;
+            }
+        });
+
         try {
-            const res = await promiseSpawn(gitPath, args, { cwd: repoPath });
+            const res = await promiseSpawn(gitPath, safeArgs, { cwd: repoPath });
             return res.stdout;
         } catch (err: any) {
             vscode.window.showErrorMessage('Error calling git command "' + gitPath + ' ' + args.join(' ') + '" : ' + err.message + ' - ' + err.stderr);
@@ -193,9 +201,6 @@ abstract class GitSkipProviderBase extends GitSkipBase {
 
     async unFlag(...args: any[]): Promise<void> {
         const files = this.getFiles(...args);
-
-        console.log('unflag', files);
-
         for (const file of files) {
             const repoPath = path.dirname(file);
 
@@ -250,7 +255,8 @@ export class GitSkipItem extends vscode.TreeItem {
             this.resourceUri = vscode.Uri.parse(GITSKIP_SCHEME + ':' + this.filePath);
         }
 
-        this.fileUri = vscode.Uri.parse(path.resolve(this.repoPath, this.filePath));
+        // this.fileUri = vscode.Uri.parse(path.resolve(this.repoPath, this.filePath));
+        this.fileUri = vscode.Uri.parse(path.join(this.repoPath, this.filePath));
 
         //this.command = { command: 'vscode.open', title: filePath, arguments: [this.fileUri] };
         this.command = { command: 'gitSkip.openChange', title: filePath, arguments: [this] };

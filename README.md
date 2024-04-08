@@ -40,7 +40,10 @@ This is an alpha release, expect the unexpected ! Please open issues in this Git
 
 ## Release Notes
 
-## 0.3.0
+## 0.4.1
 
-- Added "Assum unchanged" in explorer context menu.
-- Better error logging on command failures.
+- New file decorations in the `Git Skip` view indicate if file is flagged skip-worktree (`SW`) or assume-unchanged (`AU`).
+- `Git Skip` view now allows multi-selection.
+- Clicking a file in the `Git Skip` view now shows the file diff by default.
+- Clicking the new `Goto File` icon in the `Git Skip` now opens the file.
+- Adding multiple files at once now works as expected.
