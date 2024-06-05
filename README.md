@@ -36,6 +36,6 @@ This is an alpha release, expect the unexpected ! Please open issues in this Git
 
 ## Release Notes
 
-## 0.5.3
+## 0.5.4
 
 - Bug fixes.

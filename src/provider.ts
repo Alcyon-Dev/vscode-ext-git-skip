@@ -92,7 +92,7 @@ export class GitSkipProviderTree extends GitSkipBase implements vscode.TreeDataP
     }
 
     openFile(file: GitSkipItem): void {
-        vscode.commands.executeCommand('vscode.open', file.fileUri);
+        vscode.commands.executeCommand('vscode.open', vscode.Uri.parse('file:///' + path.join(file.repoPath, file.filePath)));
     }
 
     openChange(file: GitSkipItem): void {
