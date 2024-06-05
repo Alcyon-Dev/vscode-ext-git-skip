@@ -34,16 +34,8 @@ This is an alpha release, expect the unexpected ! Please open issues in this Git
 
 - The context menu allows clicking on the flags for untracked files (but an error will be raised).
 
-## TODO
-
-- Decorations in "Git Skip" treeview to indicate if the skipped file is `skip-worktree` (`SW`) or `assume-unchanged` (`AU`)
-
 ## Release Notes
 
-## 0.4.1
+## 0.5.3
 
-- New file decorations in the `Git Skip` view indicate if file is flagged skip-worktree (`SW`) or assume-unchanged (`AU`).
-- `Git Skip` view now allows multi-selection.
-- Clicking a file in the `Git Skip` view now shows the file diff by default.
-- Clicking the new `Goto File` icon in the `Git Skip` now opens the file.
-- Adding multiple files at once now works as expected.
+- Bug fixes.

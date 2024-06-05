@@ -6,6 +6,10 @@ All notable changes to the "Git Skip" extension will be documented in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 -->
 
+## 0.5.3
+
+- Bug fixes.
+
 ## 0.4.1
 
 - New file decorations in the `Git Skip` view indicate if file is flagged skip-worktree (`SW`) or assume-unchanged (`AU`).

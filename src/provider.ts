@@ -22,7 +22,7 @@ class GitSkipBase {
         }
 
         if (files[0] instanceof GitSkipItem) {
-            return files.filter(f => !!f).map(f => f.fileUri.fsPath);
+            return files.filter(f => !!f).map(f => path.join(f.repoPath, f.filePath));
         } else if (files[0] instanceof vscode.Uri) {
             return files.filter(f => !!f).map(f => f.fsPath);
         } else if (files[0] instanceof Object) {
