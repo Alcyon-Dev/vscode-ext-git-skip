@@ -34,13 +34,8 @@ This is an alpha release, expect the unexpected ! Please open issues in this Git
 
 - The context menu allows clicking on the flags for untracked files (but an error will be raised).
 
-## TODO
-
-- Decorations in "Git Skip" treeview to indicate if the skipped file is `skip-worktree` (`SW`) or `assume-unchanged` (`AU`)
-
 ## Release Notes
 
-## 0.3.0
+## 0.6.0
 
-- Added "Assum unchanged" in explorer context menu.
-- Better error logging on command failures.
+- You can now open a skipped file's diff by clicking on it in the `Git Skip` panel.
