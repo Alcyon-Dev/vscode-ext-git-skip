@@ -6,6 +6,10 @@ All notable changes to the "Git Skip" extension will be documented in this file.
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 -->
 
+## 0.6.0
+
+- You can now open a skipped file's diff by clicking on it in the `Git Skip` panel.
+
 ## 0.5.4
 
 - Bug fixes.

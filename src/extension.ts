@@ -19,11 +19,7 @@ export function activate(context: vscode.ExtensionContext) {
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand('gitSkip.openFile', async (file: GitSkipItem): Promise<void> => {
-        gitSkipProviderTree.openFile(file);
-    }));
-
-    context.subscriptions.push(vscode.commands.registerCommand('gitSkip.openChange', async (file: GitSkipItem): Promise<void> => {
-        gitSkipProviderTree.openChange(file);
+        await gitSkipProviderTree.openFile(file);
     }));
 
     // Skip Worktree

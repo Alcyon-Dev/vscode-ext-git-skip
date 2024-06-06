@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import promiseSpawn from '@npmcli/promise-spawn';
 import { API as GitApi, GitExtension, Status } from './types/git';
-import { SourceControlResourceState } from 'vscode';
+import { l10n } from 'vscode';
 
 const GITSKIP_SCHEME = 'gitskip';
 const GITSKIP_SCHEME_SKIP_WORKTREE = 'gitskip-skip-worktree';
@@ -91,13 +91,8 @@ export class GitSkipProviderTree extends GitSkipBase implements vscode.TreeDataP
         this._onDidChangeTreeData.fire();
     }
 
-    openFile(file: GitSkipItem): void {
-        vscode.commands.executeCommand('vscode.open', vscode.Uri.parse('file:///' + path.join(file.repoPath, file.filePath)));
-    }
-
-    openChange(file: GitSkipItem): void {
-        // vscode.commands.executeCommand('vscode.open', file.fileUri);
-        vscode.commands.executeCommand('git.openChange');
+    async openFile(file: GitSkipItem): Promise<void> {
+        await vscode.commands.executeCommand('vscode.open', file.fileUri);
     }
 
     getTreeItem(element: GitSkipItem): vscode.TreeItem {
@@ -227,9 +222,27 @@ export class GitSkipProviderAssumeUnchanged extends GitSkipProviderBase {
     public static contextValue = 'GitSkipAssumeUnchangedItem';
 }
 
+interface GitUriParams {
+	path: string;
+	ref: string;
+	submoduleOf?: string;
+}
+
+function toGitUri(uri: vscode.Uri, ref: string): vscode.Uri {
+	const params: GitUriParams = {
+		path: uri.fsPath,
+		ref
+	};
+
+	let path = uri.path;
+
+	return uri.with({ scheme: 'git', path, query: JSON.stringify(params) });
+}
+
 export class GitSkipItem extends vscode.TreeItem {
 
     public fileUri: vscode.Uri;
+    public gitUri: vscode.Uri;
 
     constructor(
         public readonly repoPath: string,
@@ -255,11 +268,12 @@ export class GitSkipItem extends vscode.TreeItem {
             this.resourceUri = vscode.Uri.parse(GITSKIP_SCHEME + ':' + this.filePath);
         }
 
-        // this.fileUri = vscode.Uri.parse(path.resolve(this.repoPath, this.filePath));
-        this.fileUri = vscode.Uri.parse(path.join(this.repoPath, this.filePath));
+        this.fileUri = vscode.Uri.file(path.join(this.repoPath, this.filePath));
+        this.gitUri = toGitUri(this.fileUri, 'HEAD');
 
-        //this.command = { command: 'vscode.open', title: filePath, arguments: [this.fileUri] };
-        this.command = { command: 'gitSkip.openChange', title: filePath, arguments: [this] };
+		let diffTitle = l10n.t('{0} (Working Tree)', path.basename(this.fileUri.fsPath));
+
+        this.command = { command: 'vscode.diff', title: filePath, arguments: [this.gitUri, this.fileUri, diffTitle] };
     }
 }
 

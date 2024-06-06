@@ -3,7 +3,7 @@
   "displayName": "Git Skip",
   "description": "Easily ignore changes to files using git's skip-worktree and assume-unchanged flags.",
   "icon": "images/logo.png",
-  "version": "0.5.4",
+  "version": "0.6.0",
   "publisher": "alcyon-dev",
   "author": {
     "name": "Alcyon Technologies",
@@ -55,11 +55,6 @@
         "command": "gitSkip.openFile",
         "title": "Open File",
         "icon": "$(go-to-file)"
-      },
-      {
-        "command": "gitSkip.openChange",
-        "title": "Open Changes",
-        "icon": "$(compare-changes)"
       }
     ],
     "menus": {

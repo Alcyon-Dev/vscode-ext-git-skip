@@ -36,6 +36,6 @@ This is an alpha release, expect the unexpected ! Please open issues in this Git
 
 ## Release Notes
 
-## 0.5.4
+## 0.6.0
 
-- Bug fixes.
+- You can now open a skipped file's diff by clicking on it in the `Git Skip` panel.
