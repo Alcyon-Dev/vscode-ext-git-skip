@@ -64,16 +64,8 @@ class GitSkipBase {
             throw new Error('Git repositories not found !');
         }
 
-        const safeArgs = args.map((arg) => {
-            if (arg.includes(' ')) {
-                return `"${arg}"`;
-            } else {
-                return arg;
-            }
-        });
-
         try {
-            const res = await promiseSpawn(gitPath, safeArgs, { cwd: repoPath });
+            const res = await promiseSpawn(gitPath, args, { cwd: repoPath });
             return res.stdout;
         } catch (err: any) {
             vscode.window.showErrorMessage('Error calling git command "' + gitPath + ' ' + args.join(' ') + '" : ' + err.message + ' - ' + err.stderr);
