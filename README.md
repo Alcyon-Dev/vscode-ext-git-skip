@@ -10,18 +10,22 @@
 
 # Git Skip
 
-This extension allows you to set Git's `skip-worktree` and `assume-unchanged` flags for files, directly from the source control pane.
+This extension allows you to set Git's `skip-worktree` and `assume-unchanged`
+flags for files, directly from the source control pane.
 
-This can be useful when you have local modifications on a file and want to prevent this file from being committed by accident (`Skip Worktree`), or to optimize the modification scan to exclude large files (`Assume Unchanged`).
+This can be useful when you have local modifications on a file and want to
+prevent this file from being committed by accident (`Skip Worktree`), or to
+optimize the modification scan to exclude large files (`Assume Unchanged`).
 
-These flags are *NOT* the same as adding a file to the `.gitignore`.
+These flags are _NOT_ the same as adding a file to the `.gitignore`.
 
-Learn more about the differences [in this great blog post](https://automationpanda.com/2018/09/19/ignoring-files-with-git/).
-
+Learn more about the differences
+[in this great blog post](https://automationpanda.com/2018/09/19/ignoring-files-with-git/).
 
 ## In Action
 
-![Setting the skip-worktree flag on a file](images/before.png) &nbsp; ![Viewing skipped files, and removing the flag](images/after.png)
+![Setting the skip-worktree flag on a file](images/before.png) &nbsp;
+![Viewing skipped files, and removing the flag](images/after.png)
 
 ## Requirements
 
@@ -30,12 +34,15 @@ Learn more about the differences [in this great blog post](https://automationpan
 
 ## Known Issues
 
-This is an alpha release, expect the unexpected ! Please open issues in this GitHub repo and/or contribute a PR.
+This is an alpha release, expect the unexpected ! Please open issues in this
+GitHub repo and/or contribute a PR.
 
-- The context menu allows clicking on the flags for untracked files (but an error will be raised).
+- The context menu allows clicking on the flags for untracked files (but an
+  error will be raised).
 
 ## Release Notes
 
-## 0.6.0
+## 0.7.0
 
-- You can now open a skipped file's diff by clicking on it in the `Git Skip` panel.
+- Fix handling of folder/files with spaces, thanks to
+  [KamilDev](https://github.com/Alcyon-Dev/vscode-ext-git-skip/pull/13)
